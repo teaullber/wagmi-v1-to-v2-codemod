@@ -1,0 +1,17 @@
+{
+  "name": "@local/wagmi-v1-to-v2-codemod",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Codemod package for migrating React-based wagmi projects from v1 to v2.",
+  "license": "MIT",
+  "scripts": {
+    "validate": "npx --yes codemod workflow validate -w workflow.yaml",
+    "test:deps": "npx --yes codemod jssg test -l json ./scripts/upgrade-package-json.ts ./tests/upgrade-package-json",
+    "test:config": "npx --yes codemod jssg test -l tsx ./scripts/migrate-config.ts ./tests/migrate-config --strictness ast",
+    "test:hooks": "npx --yes codemod jssg test -l tsx ./scripts/migrate-imports-and-hooks.ts ./tests/migrate-imports-and-hooks --strictness loose",
+    "test:connectors": "npx --yes codemod jssg test -l tsx ./scripts/migrate-connectors.ts ./tests/migrate-connectors --strictness loose",
+    "test:report": "npx --yes codemod jssg test -l tsx ./scripts/write-report.ts ./tests/report --strictness strict",
+    "test": "npm run test:deps && npm run test:config && npm run test:hooks && npm run test:connectors && npm run test:report",
+    "smoke": "npx --yes codemod workflow run -w . -t ./.tmp-smoke"
+  }
+}

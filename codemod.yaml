@@ -1,0 +1,6 @@
+schema_version: "1.0"
+name: "@local/wagmi-v1-to-v2"
+version: "0.1.0"
+description: "Automate high-confidence wagmi v1 to v2 migrations for React TypeScript apps."
+author: "Codex <local@example.com>"
+license: "MIT"

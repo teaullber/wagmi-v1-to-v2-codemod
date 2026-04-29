@@ -1,0 +1,59 @@
+version: "1"
+nodes:
+  - id: upgrade-package-json
+    name: Upgrade Package Json
+    steps:
+      - name: upgrade-package-json
+        js-ast-grep:
+          js_file: scripts/upgrade-package-json.ts
+          language: json
+          include:
+            - package.json
+  - id: migrate-config
+    name: Migrate Config
+    depends_on:
+      - upgrade-package-json
+    steps:
+      - name: migrate-config
+        js-ast-grep:
+          js_file: scripts/migrate-config.ts
+          language: tsx
+          include:
+            - "**/*.ts"
+            - "**/*.tsx"
+  - id: migrate-imports-and-hooks
+    name: Migrate Imports And Hooks
+    depends_on:
+      - migrate-config
+    steps:
+      - name: migrate-imports-and-hooks
+        js-ast-grep:
+          js_file: scripts/migrate-imports-and-hooks.ts
+          language: tsx
+          include:
+            - "**/*.ts"
+            - "**/*.tsx"
+  - id: migrate-connectors
+    name: Migrate Connectors
+    depends_on:
+      - migrate-imports-and-hooks
+    steps:
+      - name: migrate-connectors
+        js-ast-grep:
+          js_file: scripts/migrate-connectors.ts
+          language: tsx
+          include:
+            - "**/*.ts"
+            - "**/*.tsx"
+  - id: write-report
+    name: Write Report
+    depends_on:
+      - migrate-connectors
+    steps:
+      - name: write-report
+        js-ast-grep:
+          js_file: scripts/write-report.ts
+          language: tsx
+          include:
+            - "**/*.ts"
+            - "**/*.tsx"
